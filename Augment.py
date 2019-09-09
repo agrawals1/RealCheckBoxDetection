@@ -16,7 +16,6 @@ def parseXML(xmlfile):
     for item in root.findall('./object'):
         for child in item:
             if child.tag == 'bndbox':
-
                 allchecks.append([int(child[0].text), int(child[1].text), int(child[2].text), int(child[3].text)])
        
     return allchecks
@@ -42,7 +41,7 @@ def convert_labels(image_aug, aug_coords):
         return '', '', '', ''
     
         
-    f = open(r"data/afterAugBB/yolo/{}.txt".format("image" + str(counter_for_image) + "iteration" + str(counter_for_iteration)), "a")            
+    f = open(r"./data/afterAugBB/yolo/{}.txt".format("image" + str(counter_for_image) + "iteration" + str(counter_for_iteration)), "a")            
     for element in aug_coords:
         x1 = element[0]
         y1 = element[1]
@@ -81,7 +80,7 @@ def Augmentors(image, bbs):
             )),
             #execute 0 to 5 of the following (less important) augmenters per image
             #don't execute all of them, as that would often be way too strong
-            iaa.SomeOf((0, 3),
+            iaa.SomeOf((0, 2),
                 [
                     sometimes(iaa.Superpixels(p_replace=(0, 1.0), n_segments=(20, 200))), # convert images into their superpixel representation
                     iaa.OneOf([
@@ -131,7 +130,7 @@ def Augmentors(image, bbs):
 
 
 if __name__ == "__main__":
-    counter_for_image = 18
+    counter_for_image = 0
     xml_files = []
     png_files = []
     image_list = os.listdir(r"./data/ScannedImages")
@@ -145,15 +144,15 @@ if __name__ == "__main__":
     for pngfile in png_files:
         for xmlfile in xml_files:
             if (pngfile == xmlfile):
-                        checkboxes = parseXML(xmlfile + ".xml")
-                        counter_for_image +=1
-                        counter_for_iteration = 0
-                        for i in range(50):
-                            counter_for_iteration +=1
-                            image = imageio.imread("./data/ScannedImages/{}".format(pngfile + ".png"))
-                            bblist = []                        
-                            for element in checkboxes:
-                                bblist.append(BoundingBox(x1=element[0], x2=element[2], y1=element[1], y2=element[3], label='0'))
+                checkboxes = parseXML(xmlfile + ".xml")
+                counter_for_image +=1
+                counter_for_iteration = 0
+                for i in range(50):
+                    counter_for_iteration +=1
+                    image = imageio.imread("./data/ScannedImages/{}".format(pngfile + ".png"))
+                    bblist = []                        
+                    for element in checkboxes:
+                        bblist.append(BoundingBox(x1=element[0], x2=element[2], y1=element[1], y2=element[3], label='0'))
                                 
                             bbs = BoundingBoxesOnImage(bblist, shape=image.shape)
                             try:
