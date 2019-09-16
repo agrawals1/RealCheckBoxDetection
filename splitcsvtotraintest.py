@@ -17,7 +17,7 @@ for file in os.listdir(r"./data/afterAugBB/xminymin"):
 for file in os.listdir(r"./data/afterAugBB/xminymin"):
     for temp in testimagelist:
         if file[:-4] == temp[:-4]:
-           shutil.move(r"./data/afterAugBB/xminymin/{}".format(file), r"./splitcsv/test/class-0/{}".format(file)) 
+           shutil.move(r"./data/afterAugBB/xminymin/{}".format(file), r"./data/splitcsv/test/class-0/{}".format(file)) 
            
     
 
