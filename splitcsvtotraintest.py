@@ -1,8 +1,8 @@
 import shutil
 import os
-valimagelist = os.listdir(r"./data/output/val/class-0")
-trainimagelist = os.listdir(r"./data/output/train/class-0")
-testimagelist = os.listdir(r"./data/output/test/class-0")
+valimagelist = os.listdir(r"./data/splitImages/val/class-0")
+trainimagelist = os.listdir(r"./data/splitImages/train/class-0")
+testimagelist = os.listdir(r"./data/splitImages/test/class-0")
 
 for file in os.listdir(r"./data/afterAugBB/xminymin"):
     for temp in valimagelist:
